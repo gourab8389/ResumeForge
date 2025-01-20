@@ -3,7 +3,7 @@ import React from 'react'
 const DocumentPage = () => {
   return (
     <div>
-      document page
+      All resume
     </div>
   )
 }
