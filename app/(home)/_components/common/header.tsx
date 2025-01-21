@@ -1,8 +1,10 @@
 "use client"
 
 import Logo from '@/components/shared/logo';
-import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
-import { Loader } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {LogoutLink, useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
+import { ChevronDown, Loader } from 'lucide-react';
 import { Fragment } from 'react';
 
 const Header = () => {
@@ -28,10 +30,31 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-4">
           {isLoading || error ? (
-            <Loader className='w-8 h-8 animate-spin'/>
+            <Loader className='!size-6 animate-spin text-black dark:text-white/80'/>
           ): (
             <Fragment>
-              
+              {
+                isAuthenticated && user ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger role='button' className='rounded-full'>
+                      <div className="flex items-center gap-1">
+                        <Avatar role='button' className='!cursor-pointer'>
+                          <AvatarImage src={user?.picture || ""}/>
+                          <AvatarFallback className='!cursor-pointer'>
+                            {user?.given_name?.charAt(0)}
+                            {user?.family_name?.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className='my-3'>
+                      <DropdownMenuItem asChild className='!text-red-500 font-medium !cursor-pointer'>
+                        <LogoutLink>Logout</LogoutLink>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : null
+              }
             </Fragment>
           )}
         </div>
