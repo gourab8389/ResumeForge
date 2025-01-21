@@ -22,13 +22,35 @@ app
           id: z.string(),
         })
       ),
-     (c) => {
+    async (c) => {
     const { id } = c.req.valid('param');
     return c.json({
       message: `Hello Next.js! ${id}`,
     })
 })
-
+.post("/create/:postId",
+    zValidator(
+        "json",
+        z.object({
+            title: z.string(),
+            summary: z.string(),
+        })
+    ),
+    zValidator(
+        "param",
+        z.object({
+          postId: z.string(),
+        })
+    ),
+    async (c) => {
+        const { title, summary } = c.req.valid("json");
+        const { postId } = c.req.valid("param");
+    return c.json({
+        title,
+        summary,
+        postId,
+    })
+})
 
 export const GET = handle(app)
 export const POST = handle(app)
