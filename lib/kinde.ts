@@ -22,11 +22,12 @@ export const getAuthUser = createMiddleware<Env>(async (c, next) => {
         }
         const user = await getUser();
         c.set("user", user);
+        await next();
     } catch (error) {
         console.log(error);
         throw new HTTPException(500, {
             res: c.json({
-                error: "Internal Server Error in middleware"
+                error: "Internal Server Error in kinde"
             }),
         });
     }
