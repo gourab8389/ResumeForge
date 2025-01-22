@@ -1,34 +1,32 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
-import { z } from 'zod'
-import { zValidator } from '@hono/zod-validator'
+import { logger } from 'hono/logger'
+import authors from './authors'
+import books from './books'
+import { HTTPException } from 'hono/http-exception'
 
 export const runtime = 'edge'
 
 const app = new Hono().basePath('/api')
 
-app
-.get('/hello',
-    (x) => x,
-    (c) => {
-  return c.json({
-    message: 'Hello Next.js!',
-  })
+app.use("*", logger());
+
+app.onError((err, c) => {
+    if(err instanceof HTTPException){
+        return err.getResponse();
+    }
+    return c.json({ error: " internal error "});
 })
-.get('/hello/:id',
-    zValidator(
-        "param",
-        z.object({
-          id: z.string(),
-        })
-      ),
-     (c) => {
-    const { id } = c.req.valid('param');
+
+const routes = app.route('/authors', authors).route('/books', books)
+
+app.get("/", (c) => {
     return c.json({
-      message: `Hello Next.js! ${id}`,
+        message: "Hello from Ai Resume!",
     })
 })
 
+export type AppType = typeof routes
 
 export const GET = handle(app)
 export const POST = handle(app)
