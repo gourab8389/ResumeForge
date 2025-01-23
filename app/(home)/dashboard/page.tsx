@@ -1,4 +1,5 @@
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import AddResume from "../_components/common/add-resume";
 
 const DocumentPage = async () => {
   const {getUser} = getKindeServerSession();
@@ -10,8 +11,8 @@ const user = await getUser();
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold">Resume Builder</h1>
-            <p className="text-base dark:text-inherit">
-              Create your own custom resume with AI & Subscribe to the channel
+            <p className="text-lg dark:text-inherit">
+              Create your using AI
             </p>
           </div>
           <div className="shrink-0 flex items-center gap-3">
@@ -29,8 +30,8 @@ const user = await getUser();
             All Resume
           </h5>
           <div className="flex flex-wrap w-full gap-5">
-            {/* <AddResume />
-            <ResumeList /> */}
+            <AddResume />
+            {/* <ResumeList /> */}
           </div>
         </div>
       </div>
