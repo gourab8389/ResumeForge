@@ -1,16 +1,41 @@
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import AddResume from "../_components/add-resume";
+import ResumeList from "../_components/resume-list";
 
 const DocumentPage = async () => {
   const {getUser} = getKindeServerSession();
 const user = await getUser();
 
   return (
-    <div className="flex items-center justify-center h-screen flex-col gap-5">
-      All resume
-      <div>
-        <h1>{user?.email}</h1>
-        <span>{user?.id}</span>
-      </div>  
+    <div className="w-full">
+      <div className="w-full mx-auto max-w-7xl py-5 px-5">
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Resume Builder</h1>
+            <p className="text-lg dark:text-inherit">
+              Create your using AI
+            </p>
+          </div>
+          <div className="shrink-0 flex items-center gap-3">
+            {/* {Trash List} */}
+            {/* <TrashListBox /> */}
+          </div>
+        </div>
+
+        <div className="w-full pt-11">
+          <h5
+            className="text-xl font-semibold dark:text-inherit
+          mb-3
+          "
+          >
+            All Resume
+          </h5>
+          <div className="flex flex-wrap w-full gap-5">
+            <AddResume />
+            <ResumeList />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

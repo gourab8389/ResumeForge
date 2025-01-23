@@ -1,8 +1,6 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { logger } from 'hono/logger'
-import authors from './authors'
-import books from './books'
 import { HTTPException } from 'hono/http-exception'
 
 export const runtime = 'edge'
@@ -18,7 +16,7 @@ app.onError((err, c) => {
     return c.json({ error: " internal error "});
 })
 
-const routes = app.route('/authors', authors).route('/books', books)
+const routes = app.route("/", app).route("/", app)
 
 app.get("/", (c) => {
     return c.json({
