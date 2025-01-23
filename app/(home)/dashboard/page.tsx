@@ -1,5 +1,6 @@
 import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
-import AddResume from "../_components/common/add-resume";
+import AddResume from "../_components/add-resume";
+import ResumeList from "../_components/resume-list";
 
 const DocumentPage = async () => {
   const {getUser} = getKindeServerSession();
@@ -31,7 +32,7 @@ const user = await getUser();
           </h5>
           <div className="flex flex-wrap w-full gap-5">
             <AddResume />
-            {/* <ResumeList /> */}
+            <ResumeList />
           </div>
         </div>
       </div>
