@@ -30,7 +30,10 @@ const documentRoute = new Hono().post(
         authorEmail: authorEmail,
       };
 
-      const [data] = await db.insert(documentTable).values(newDoc).returning();
+      const [data] = await db
+        .insert(documentTable)
+        .values(newDoc)
+        .returning();
       return c.json(
         {
           success: "ok",
@@ -39,16 +42,16 @@ const documentRoute = new Hono().post(
         { status: 200 }
       );
     } catch (error) {
-        return c.json(
-            {
-                success: false,
-                message: "Failed to create document",
-                error: error,
-            },
-            { status: 500 }
-        )
+      return c.json(
+        {
+          success: false,
+          message: "Failed to create document",
+          error: error,
+        },
+        500
+      );
     }
   }
-);
+)
 
 export default documentRoute;

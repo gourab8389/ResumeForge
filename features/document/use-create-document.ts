@@ -19,7 +19,8 @@ const useCreateDocument = () => {
             console.log(response);
             queryClient.invalidateQueries({ queryKey: ["documents"]});
         },
-        onError: () => {
+        onError: (error) => {
+            console.error(error);
             toast({
                 title: "Failed to create document",
                 description: "An error occurred while creating the document",
@@ -27,6 +28,8 @@ const useCreateDocument = () => {
             })
         }
     })
+
+    return mutation;
 };
 
 
