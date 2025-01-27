@@ -26,10 +26,6 @@ const AddResume = () => {
     );
   }, [mutate, router]);
 
-    // const onCreate = () => {
-    //   toast.success("Blank Resume Created");
-    // }
-
   return (
     <>
       <div
