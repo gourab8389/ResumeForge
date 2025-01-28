@@ -30,7 +30,7 @@ const ResumeItem = (
     className="cursor-pointer max-w-[164px] w-full border rounded-lg transition-all h-[197px] hover:border-primary hover:shadow-md shadow-primary"
     style={{border: themeColor ?? "#E5E7EB"}}
     >
-      
+      <div className="flex flex-col w-full h-full items-center rounded-lg justify-center bg-[#fdfdfd] dark:bg-secondary"></div>
     </div>
   )
 }
