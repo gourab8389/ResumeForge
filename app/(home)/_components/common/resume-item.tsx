@@ -1,8 +1,8 @@
 import { useRouter } from "next/navigation";
-import { format } from "date-fns";
 import { useCallback, useMemo } from "react";
 import { Dot, EllipsisVertical, FileText, Globe, Lock } from "lucide-react";
 import Image from "next/image";
+import { format } from "date-fns/format";
 
 interface ResumeItemProps {
     documentId: string;
@@ -18,11 +18,11 @@ const ResumeItem = (
 
     const router = useRouter();
 
-    const docDate = useMemo(()=>{
-        if(!updatedAt) return null;
-        const formatetedDate = format(updatedAt, "MMM dd, yyyy");
-        return formatetedDate;
-    }, [updatedAt]);
+    const docDate = useMemo(() => {
+      if (!updatedAt) return null;
+      const date = new Date(updatedAt);
+      return format(date, "MMM dd, yyyy");
+  }, [updatedAt]);
     const gotoDoc = useCallback(() => {
         router.push(`/dashboard/document/${documentId}/edit`);
     },[router, documentId]);
