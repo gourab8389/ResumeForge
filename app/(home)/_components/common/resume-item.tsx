@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { Dot, EllipsisVertical, FileText, Globe, Lock } from "lucide-react";
 import Image from "next/image";
-import { format } from "date-fns/format";
+import { format } from "date-fns";
 
 interface ResumeItemProps {
     documentId: string;
