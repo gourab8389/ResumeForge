@@ -1,4 +1,4 @@
-import React from 'react'
+"use client"
 import { ResumeInfoProvider } from '@/context/resume-info-provider'
 import EditResume from '../../../../_components/edit-resume'
 

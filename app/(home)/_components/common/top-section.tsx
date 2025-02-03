@@ -2,6 +2,7 @@
 
 import { useResumeContext } from "@/context/resume-info-provider";
 import { AlertCircle } from "lucide-react";
+import ResumeTitle from "./resume-title";
 
 const TopSection = () => {
     const { resumeInfo } = useResumeContext();
@@ -15,7 +16,23 @@ const TopSection = () => {
     )}
     <div className="w-full flex items-center justify-between border-b pb-3">
         <div className="flex items-center gap-2">
-            {/* <ResumeTitle /> */}
+            <ResumeTitle
+                initialTitle={resumeInfo?.title || ""}
+                status={resumeInfo?.status}
+                onSave={(value) => console.log(value)}
+                isLoading={false}
+            />
+        </div>
+        <div className="flex items-center gap-2">
+            {/* theme color */}
+
+            {/* Preview Modal */}
+
+            {/* Download button */}
+
+            {/* Share resume */}
+
+            {/* more option */}
         </div>
     </div>
     </>
