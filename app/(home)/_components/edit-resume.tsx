@@ -1,6 +1,7 @@
 import React from 'react'
 import TopSection from './common/top-section';
-import ResumeForm from './common/resume-form';
+import ResumeForm from './resume-form';
+import ResumePreview from './resume-preview';
 
 const EditResume = () => {
   return (
@@ -12,6 +13,7 @@ const EditResume = () => {
                 {/* form section */}
                 <ResumeForm/>
                 {/* preview section */}
+                <ResumePreview/>
             </div>
         </div>
       </div>
