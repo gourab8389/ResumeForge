@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 import {
   createDocumentTableSchema,
   DocumentSchema,
@@ -84,6 +85,50 @@ const documentRoute = new Hono()
         {
           success: false,
           message: "Failed to fetch documents",
+          error: error,
+        },
+        500
+      );
+    }
+  }
+)
+.get(
+  "/:documentId",
+  zValidator("param", 
+    z.object({ 
+      documentId: z.string(),
+    })
+  ),
+  getAuthUser,
+  async (c) => {
+    try {
+      const user = c.get("user");
+      const userId = user?.id;
+      const { documentId } = c.req.valid("param");
+      const documentData = await db.query.documentTable.findFirst({
+        where: and(
+          eq(documentTable.userId, userId),
+          eq(documentTable.documentId, documentId)
+        ),
+        with: {
+          personalInfo: true,
+          experiences: true,
+          educations: true,
+          skills: true,
+        }
+      });
+      return c.json(
+        {
+          success: true,
+          data: documentData,
+        },
+        { status: 200 }
+      );
+    } catch (error) {
+      return c.json(
+        {
+          success: false,
+          message: "Failed to fetch document data",
           error: error,
         },
         500
