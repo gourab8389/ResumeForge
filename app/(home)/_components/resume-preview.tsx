@@ -4,6 +4,7 @@ import { useResumeContext } from "@/context/resume-info-provider";
 import { cn } from "@/lib/utils";
 import PersonalInfo from "./preview/personal-info";
 import SummaryPreview from "./preview/summary-preview";
+import ExperiencePreview from "./preview/experience-preview";
 // import PersonalInfo from "@/components/preview/PersonalInfo";
 // import SummaryPreview from "@/components/preview/SummaryPreview";
 // import ExperiencePreview from "@/components/preview/ExperiencePreview";
@@ -35,7 +36,7 @@ const ResumePreview = () => {
       <SummaryPreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Professional Exp} */}
-      {/* <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
+      <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Educational Info} */}
       {/* <EducationPreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
