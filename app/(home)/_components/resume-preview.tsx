@@ -7,11 +7,6 @@ import SummaryPreview from "./preview/summary-preview";
 import ExperiencePreview from "./preview/experience-preview";
 import EducationPreview from "./preview/educational-preview";
 import SkillPreview from "./preview/skill-preview";
-// import PersonalInfo from "@/components/preview/PersonalInfo";
-// import SummaryPreview from "@/components/preview/SummaryPreview";
-// import ExperiencePreview from "@/components/preview/ExperiencePreview";
-// import EducationPreview from "@/components/preview/EducationPreview";
-// import SkillPreview from "@/components/preview/SkillPreview";
 
 const ResumePreview = () => {
   const { resumeInfo } = useResumeContext();
