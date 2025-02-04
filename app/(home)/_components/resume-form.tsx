@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useResumeContext } from "@/context/resume-info-provider";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import PersonalInfoForm from "./form/personal-info-form";
 
 const ResumeForm = () => {
   const { resumeInfo } = useResumeContext();
@@ -44,6 +45,12 @@ const ResumeForm = () => {
               <ArrowRight size={"16px"}/>
               Previous
             </Button>
+        </div>
+        <div className="px-5 py-3 pb-5">
+          {/* personal info form */}
+          {activeFormIndex === 1 && (
+            <PersonalInfoForm handleNext={handleNext}/>
+            )}
         </div>
       </div>
     </div>

@@ -32,14 +32,14 @@ const ResumePreview = () => {
       {/* {Summary} */}
       <SummaryPreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
-      {/* {Professional Exp} */}
-      <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} />
-
       {/* {Educational Info} */}
       <EducationPreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Skills} */}
       <SkillPreview isLoading={isLoading} resumeInfo={resumeInfo} />
+
+      {/* {Professional Exp} */}
+      <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} />
     </div>
   );
 };
