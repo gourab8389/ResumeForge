@@ -5,11 +5,15 @@ import {
   createDocumentTableSchema,
   DocumentSchema,
   documentTable,
+  updateCombinedSchema,
+  UpdateDocumentSchema,
 } from "@/db/schema/document";
 import { getAuthUser } from "@/lib/kinde";
 import { generateDocUUID } from "@/lib/helper";
 import { db } from "@/db";
 import { and, desc, eq, ne } from "drizzle-orm";
+import { error } from "console";
+import { experienceTable, personalInfoTable } from "@/db/schema";
 
 const documentRoute = new Hono()
 .post(
@@ -49,6 +53,135 @@ const documentRoute = new Hono()
         {
           success: false,
           message: "Failed to create document",
+          error: error,
+        },
+        500
+      );
+    }
+  }
+)
+.patch(
+  "/update/:documentId",
+  zValidator("param", 
+    z.object({ 
+      documentId: z.string(),
+    })
+  ),
+  zValidator("json", updateCombinedSchema),
+  getAuthUser,
+  async (c) => {
+    try {
+      const user = c.get("user");
+      const userId = user.id;
+      const { documentId } = c.req.valid("param");
+      
+      const {
+        title,
+        status,
+        summary,
+        themeColor,
+        thumbnail,
+        currentPosition,
+        personalInfo,
+        education,
+        experience,
+        skills,
+      } = c.req.valid("json")
+
+      if(!documentId) {
+        return c.json(
+          {
+            success: false,
+            message: "Document ID is required",
+          },
+          400
+        );
+      }
+      await db.transaction(async (trx) => {
+        const [existingDocument] = await trx.select()
+        .from(documentTable)
+        .where(
+          and(
+            eq(documentTable.userId, userId),
+            eq(documentTable.documentId, documentId)
+          )
+        );
+
+        if(!existingDocument) {
+          return c.json(
+            {
+              success: false,
+              message: "Document not found",
+            },
+            404
+          );
+        }
+
+        const resumeUpdate = {} as UpdateDocumentSchema;
+        if (title) resumeUpdate.title = title;
+        if (status) resumeUpdate.status = status;
+        if (summary) resumeUpdate.summary = summary;
+        if (themeColor) resumeUpdate.themeColor = themeColor;
+        if (thumbnail) resumeUpdate.thumbnail = thumbnail;
+        if (currentPosition) resumeUpdate.currentPosition = currentPosition || 1;
+
+        if(Object.keys(resumeUpdate).length > 0) {
+        await trx.
+        update(documentTable).
+        set(resumeUpdate).
+        where(
+          and(
+            eq(documentTable.userId, userId),
+            eq(documentTable.documentId, documentId)
+          )
+        )
+        .returning();
+        }
+
+        if(personalInfo){
+          if(!personalInfo?.firstName && !personalInfo?.lastName) {
+            return;
+          }
+          const exists = await trx.select()
+          .from(personalInfoTable)
+          .where(eq(personalInfoTable.docId, existingDocument.id))
+          .limit(1);
+
+          if(exists.length > 0) {
+            await trx.update(personalInfoTable)
+            .set(personalInfo)
+            .where(eq(personalInfoTable.docId, existingDocument.id))
+          } else {
+            await trx.insert(personalInfoTable)
+            .values({
+              ...personalInfo,
+              docId: existingDocument.id,
+            })
+          }
+        }
+
+        if(experience && Array.isArray(experience)){
+          const existingExperience = await trx.select()
+          .from(experienceTable)
+          .where(eq(experienceTable.docId, existingDocument.id));
+
+          const existingExperienceMap = new Set(
+            existingExperience.map((exp) => [exp.id, exp])
+          );
+          for(const exp of experience){
+            if(!exp.companyName && !exp.title){
+              continue;
+            }
+            
+          }
+        }
+
+      })
+    } catch (error) {
+      return c.json(
+        {
+          success: false,
+          message: "Failed to update document",
           error: error,
         },
         500
