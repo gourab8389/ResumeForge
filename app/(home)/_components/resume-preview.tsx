@@ -3,11 +3,10 @@ import React from "react";
 import { useResumeContext } from "@/context/resume-info-provider";
 import { cn } from "@/lib/utils";
 import PersonalInfo from "./preview/personal-info";
-// import PersonalInfo from "@/components/preview/PersonalInfo";
-// import SummaryPreview from "@/components/preview/SummaryPreview";
-// import ExperiencePreview from "@/components/preview/ExperiencePreview";
-// import EducationPreview from "@/components/preview/EducationPreview";
-// import SkillPreview from "@/components/preview/SkillPreview";
+import SummaryPreview from "./preview/summary-preview";
+import ExperiencePreview from "./preview/experience-preview";
+import EducationPreview from "./preview/educational-preview";
+import SkillPreview from "./preview/skill-preview";
 
 const ResumePreview = () => {
   const { resumeInfo } = useResumeContext();
@@ -31,16 +30,16 @@ const ResumePreview = () => {
       <PersonalInfo isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Summary} */}
-      {/* <SummaryPreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
+      <SummaryPreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Professional Exp} */}
-      {/* <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
+      <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Educational Info} */}
-      {/* <EducationPreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
+      <EducationPreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Skills} */}
-      {/* <SkillPreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
+      <SkillPreview isLoading={isLoading} resumeInfo={resumeInfo} />
     </div>
   );
 };
