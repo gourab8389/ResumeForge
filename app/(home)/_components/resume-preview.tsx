@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import PersonalInfo from "./preview/personal-info";
 import SummaryPreview from "./preview/summary-preview";
 import ExperiencePreview from "./preview/experience-preview";
+import EducationPreview from "./preview/educational-preview";
 // import PersonalInfo from "@/components/preview/PersonalInfo";
 // import SummaryPreview from "@/components/preview/SummaryPreview";
 // import ExperiencePreview from "@/components/preview/ExperiencePreview";
@@ -39,7 +40,7 @@ const ResumePreview = () => {
       <ExperiencePreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Educational Info} */}
-      {/* <EducationPreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
+      <EducationPreview isLoading={isLoading} resumeInfo={resumeInfo} />
 
       {/* {Skills} */}
       {/* <SkillPreview isLoading={isLoading} resumeInfo={resumeInfo} /> */}
