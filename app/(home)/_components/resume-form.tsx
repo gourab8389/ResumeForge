@@ -43,7 +43,7 @@ const ResumeForm = () => {
             onClick={handleNext}
             >
               <ArrowRight size={"16px"}/>
-              Previous
+              Next
             </Button>
         </div>
         <div className="px-5 py-3 pb-5">
