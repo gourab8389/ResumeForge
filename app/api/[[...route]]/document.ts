@@ -147,13 +147,13 @@ const documentRoute = new Hono()
           }
 
           if (personalInfo) {
-            if (!personalInfo?.firstName && !personalInfo?.lastName) {
+            if (!personalInfo?.id) {
               return;
             }
             const exists = await trx
               .select()
               .from(personalInfoTable)
-              .where(eq(personalInfoTable.docId, existingDocument.id))
+              .where(eq(personalInfoTable.id, personalInfo?.id))
               .limit(1);
 
             if (exists.length > 0) {
@@ -268,6 +268,14 @@ const documentRoute = new Hono()
             }
           }
         });
+
+        return c.json(
+          {
+            success: true,
+            message: "Document updated successfully",
+          },
+          { status: 200 }
+        );
       } catch (error) {
         return c.json(
           {
