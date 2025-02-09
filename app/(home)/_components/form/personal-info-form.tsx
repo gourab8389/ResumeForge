@@ -7,8 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import PersonalInfoSkeletonLoader from "@/components/skeleton-loader/personal-info-loader";
 import { generateThumbnail } from "@/lib/helper";
-// import useUpdateDocument from "@/features/document/use-update-document";
-import { toast } from "@/hooks/use-toast";
+import useUpdateDocument from "@/features/document/use-update-document";
+import { toast } from "sonner";
 
 const initialState = {
   id: undefined,
@@ -23,8 +23,8 @@ const initialState = {
 const PersonalInfoForm = (props: { handleNext: () => void }) => {
   const { handleNext } = props;
   const { resumeInfo, onUpdate } = useResumeContext();
-//   const { mutateAsync, isPending } = useUpdateDocument();
-    const isLoading = false;
+  const { mutateAsync, isPending } = useUpdateDocument();
+  const isLoading = false;
 
   const [personalInfo, setPersonalInfo] =
     React.useState<PersonalInfoType>(initialState);
@@ -59,43 +59,33 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
     [resumeInfo, onUpdate]
   );
 
-//   const handleSubmit = useCallback(
-//     async (e: { preventDefault: () => void }) => {
-//       e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
 
-//       const thumbnail = await generateThumbnail();
-//       const currentNo = resumeInfo?.currentPosition
-//         ? resumeInfo?.currentPosition + 1
-//         : 1;
-//       await mutateAsync(
-//         {
-//           currentPosition: currentNo,
-//           thumbnail: thumbnail,
-//           personalInfo: personalInfo,
-//         },
-//         {
-//           onSuccess: () => {
-//             toast({
-//               title: "Success",
-//               description: "PersonalInfo updated successfully",
-//             });
-//             handleNext();
-//           },
-//           onError: () => {
-//             toast({
-//               title: "Error",
-//               description: "Failed to update personal information",
-//               variant: "destructive",
-//             });
-//           },
-//         }
-//       );
-//     },
-//     [resumeInfo, personalInfo]
-//   );
-const handleSubmit = () => {
-    console.log("Submit");
-}
+      const thumbnail = await generateThumbnail();
+      const currentNo = resumeInfo?.currentPosition
+        ? resumeInfo?.currentPosition + 1
+        : 1;
+      await mutateAsync(
+        {
+          currentPosition: currentNo,
+          thumbnail: thumbnail,
+          personalInfo: personalInfo,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Personal Information updated successfully");
+            handleNext();
+          },
+          onError: () => {
+            toast.error("Failed to update personal information",);
+          },
+        }
+      );
+    },
+    [resumeInfo, personalInfo]
+  );
 
   if (isLoading) {
     return <PersonalInfoSkeletonLoader />;
@@ -185,10 +175,10 @@ const handleSubmit = () => {
             className="mt-4"
             type="submit"
             disabled={
-              resumeInfo?.status === "archived" ? true : false
+              isPending || resumeInfo?.status === "archived" ? true : false
             }
           >
-            {<Loader size="15px" className="animate-spin" />}
+            {isPending && <Loader size="15px" className="animate-spin" />}
             Save Changes
           </Button>
         </form>
