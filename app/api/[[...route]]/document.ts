@@ -12,7 +12,6 @@ import { getAuthUser } from "@/lib/kinde";
 import { generateDocUUID } from "@/lib/helper";
 import { db } from "@/db";
 import { and, desc, eq, ne } from "drizzle-orm";
-import { error } from "console";
 import {
   educationTable,
   experienceTable,
@@ -133,7 +132,7 @@ const documentRoute = new Hono()
           if (currentPosition)
             resumeUpdate.currentPosition = currentPosition || 1;
 
-          if (Object.keys(resumeUpdate).length > 0) {
+          if (Object.keys(resumeUpdate)?.length > 0) {
             await trx
               .update(documentTable)
               .set(resumeUpdate)

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import PersonalInfoSkeletonLoader from "@/components/skeleton-loader/personal-info-loader";
 import { generateThumbnail } from "@/lib/helper";
 import useUpdateDocument from "@/features/document/use-update-document";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 const initialState = {
   id: undefined,
@@ -75,18 +75,11 @@ const PersonalInfoForm = (props: { handleNext: () => void }) => {
         },
         {
           onSuccess: () => {
-            toast({
-              title: "Success",
-              description: "PersonalInfo updated successfully",
-            });
+            toast.success("Personal Information updated successfully");
             handleNext();
           },
           onError: () => {
-            toast({
-              title: "Error",
-              description: "Failed to update personal information",
-              variant: "destructive",
-            });
+            toast.error("Failed to update personal information",);
           },
         }
       );
